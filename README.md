@@ -90,25 +90,26 @@ Each album contains:
 
 VibeTune/
 ├── Backend/
-│ ├── server.js
-│ ├── makeAdmin.js
-│ ├── checkAdmin.js
-│ ├── models/
-│ │ └── User.js
-│ ├── .env
-│ └── package.json
+│   ├── server.js
+│   ├── makeAdmin.js
+│   ├── checkAdmin.js
+│   ├── models/
+│   │   └── User.js
+│   ├── package.json
+│   ├── .env
+│   └── ...
 │
 ├── Frontend/
-│ ├── index.html
-| ├── admin.html
-│ ├── app.js
-│ ├── config.js
-│ ├── css/
-│ ├── img/
-│ └── Songs/
-│ ├── Album1/
-│ ├── Album2/
-│ └── ...
+│   ├── index.html
+│   ├── admin.html
+│   ├── app.js
+│   ├── config.js
+│   ├── css/
+│   ├── img/
+│   └── Songs/
+│       ├── Album1/
+│       ├── Album2/
+│       └── ...
 │
 └── README.md
 
@@ -167,13 +168,13 @@ GET /api/admin/users
 ## 📸 Screenshots
 
 ### 🏠 Home Page
-![Home Page](https://github.com/user-attachments/assets/4f3817a9-d5a3-4777-bbb5-8ed8b2fde546)
+![Home Page](https://github.com/user-attachments/assets/19931eec-ae84-488b-847e-a1d4434759a5)
 
 ### 🔐 Login Page
-![Login Page](https://github.com/user-attachments/assets/8eb4be98-9565-497a-8c55-9333d0a81feb)
+![Login Page](https://github.com/user-attachments/assets/e3da3e16-4875-4005-9563-961266976e0e)
 
 ### 🎵 After Login (Dashboard)
-![Dashboard](https://github.com/user-attachments/assets/a948cdf3-3b3a-45e3-8a58-b92da72dd818)
+![Dashboard](https://github.com/user-attachments/assets/1f33c60d-51e3-46d2-b9fe-83e38487669d)
 
 🌟 Why This Project Matters
 Demonstrates real authentication logic
