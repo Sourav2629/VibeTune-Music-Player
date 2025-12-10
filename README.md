@@ -131,7 +131,6 @@ PORT=3000
 
 ### 1️⃣ Clone Repository
 
-```bash
 git clone https://github.com/Sourav2629/VibeTune-Music-Player.git
 cd VibeTune-Music-Player/Backend
 
@@ -165,6 +164,7 @@ DELETE /api/songs/unlike
 Admin
 GET /api/admin/users
 
+---
 ## 📸 Screenshots
 
 ### 🏠 Home Page
