@@ -164,16 +164,16 @@ DELETE /api/songs/unlike
 Admin
 GET /api/admin/users
 
-📸 Screenshots
-HOME PAGE : 
-<img width="1919" height="907" alt="image" src="https://github.com/user-attachments/assets/4f3817a9-d5a3-4777-bbb5-8ed8b2fde546" />
+## 📸 Screenshots
 
-Login Page: 
-<img width="1919" height="902" alt="image" src="https://github.com/user-attachments/assets/8eb4be98-9565-497a-8c55-9333d0a81feb" />
+### 🏠 Home Page
+![Home Page](https://github.com/user-attachments/assets/4f3817a9-d5a3-4777-bbb5-8ed8b2fde546)
 
-After Login: 
-<img width="1918" height="901" alt="image" src="https://github.com/user-attachments/assets/a948cdf3-3b3a-45e3-8a58-b92da72dd818" />
+### 🔐 Login Page
+![Login Page](https://github.com/user-attachments/assets/8eb4be98-9565-497a-8c55-9333d0a81feb)
 
+### 🎵 After Login (Dashboard)
+![Dashboard](https://github.com/user-attachments/assets/a948cdf3-3b3a-45e3-8a58-b92da72dd818)
 
 🌟 Why This Project Matters
 Demonstrates real authentication logic
