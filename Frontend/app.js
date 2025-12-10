@@ -1,3 +1,4 @@
+const API_BASE_URL = window.API_BASE_URL;
 let currentSong = new Audio();
 let songs;
 let currFolder;
@@ -37,7 +38,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     const password = document.getElementById('loginPassword').value;
     
     try {
-        const response = await fetch('http://localhost:3000/api/auth/login', {
+        const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -70,7 +71,7 @@ document.getElementById('signupForm').addEventListener('submit', async (e) => {
     const password = document.getElementById('signupPassword').value;
     
     try {
-        const response = await fetch('http://localhost:3000/api/auth/register', {
+        const response = await fetch(`${API_BASE_URL}/api/auth/register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -167,7 +168,7 @@ async function checkExistingSession() {
             updateUIForLoggedInUser();
             
             // Verify token is still valid in the background
-            const response = await fetch('http://localhost:3000/api/user/profile', {
+            const response = await fetch(`${API_BASE_URL}/api/user/profile`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -213,7 +214,7 @@ async function fetchLikedSongs() {
     if (!currentUser) return;
     
     try {
-        const response = await fetch('http://localhost:3000/api/songs/liked', {
+        const response = await fetch(`${API_BASE_URL}/api/songs/liked`, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             }
@@ -250,7 +251,7 @@ async function toggleLike(songId) {
         const endpoint = isLiked ? '/api/songs/unlike' : '/api/songs/like';
         
         console.log('Making request to:', endpoint);
-        const response = await fetch(`http://localhost:3000${endpoint}`, {
+        const response = await fetch(`${API_BASE_URL}${endpoint}`, {
             method,
             headers: {
                 'Content-Type': 'application/json',
@@ -401,7 +402,7 @@ async function displayFavorites(e) {
     try {
         updateLibraryNav(e.currentTarget);
         
-        const response = await fetch('http://localhost:3000/api/songs/liked', {
+        const response = await fetch(`${API_BASE_URL}/api/songs/liked`, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             }
