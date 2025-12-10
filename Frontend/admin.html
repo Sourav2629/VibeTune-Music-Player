@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VibeTune Admin - User Management</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/utility.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body class="bg-black">
+    <div class="admin-container">
+        <div class="admin-header">
+            <h1>User Management</h1>
+            <button class="back-button" onclick="window.location.href='/'">Back to VibeTune</button>
+        </div>
+        <div class="stats-container">
+            <div id="userStats" class="user-stats">
+                <!-- Stats will be populated here -->
+            </div>
+        </div>
+        <div class="table-wrapper">
+            <table class="users-table">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Created</th>
+                        <th>Last Login</th>
+                        <th>Admin Status</th>
+                    </tr>
+                </thead>
+                <tbody id="usersTableBody">
+                    <!-- Users will be populated here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Check if user is logged in and is admin
+        async function checkAdminAccess() {
+            const token = localStorage.getItem('token');
+            const user = JSON.parse(localStorage.getItem('user'));
+            
+            if (!token || !user || !user.isAdmin) {
+                alert('Access denied. Admin privileges required.');
+                window.location.href = '/';
+                return false;
+            }
+            return true;
+        }
+
+        // Format date to relative time
+        function formatRelativeTime(date) {
+            const now = new Date();
+            const then = new Date(date);
+            const diffInSeconds = Math.floor((now - then) / 1000);
+            
+            if (diffInSeconds < 60) return 'just now';
+            if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)} minutes ago`;
+            if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)} hours ago`;
+            if (diffInSeconds < 2592000) return `${Math.floor(diffInSeconds / 86400)} days ago`;
+            if (diffInSeconds < 31536000) return `${Math.floor(diffInSeconds / 2592000)} months ago`;
+            return `${Math.floor(diffInSeconds / 31536000)} years ago`;
+        }
+
+        // Fetch and display users
+        async function fetchUsers() {
+            if (!await checkAdminAccess()) return;
+
+            try {
+                const token = localStorage.getItem('token');
+                const response = await fetch('http://localhost:3000/api/admin/users', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch users');
+                }
+
+                const users = await response.json();
+                const tableBody = document.getElementById('usersTableBody');
+                
+                if (users.length === 0) {
+                    tableBody.innerHTML = `
+                        <tr>
+                            <td colspan="5" style="text-align: center; padding: 20px; color: #888;">No users found</td>
+                        </tr>
+                    `;
+                    return;
+                }
+
+                // Update user stats
+                const totalUsers = users.length;
+                const totalAdmins = users.filter(user => user.isAdmin).length;
+                const recentUsers = users.filter(user => {
+                    const userDate = new Date(user.createdAt);
+                    const thirtyDaysAgo = new Date();
+                    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+                    return userDate > thirtyDaysAgo;
+                }).length;
+
+                document.getElementById('userStats').innerHTML = `
+                    <div class="stat-card">
+                        <h3>Total Users</h3>
+                        <p>${totalUsers}</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Admin Users</h3>
+                        <p>${totalAdmins}</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>New Users (30 days)</h3>
+                        <p>${recentUsers}</p>
+                    </div>
+                `;
+
+                // Update users table
+                tableBody.innerHTML = users.map(user => `
+                    <tr>
+                        <td data-label="Username">${user.username}</td>
+                        <td data-label="Email">${user.email}</td>
+                        <td data-label="Created">${formatRelativeTime(user.createdAt)}</td>
+                        <td data-label="Last Login">${user.lastLogin ? formatRelativeTime(user.lastLogin) : 'Never'}</td>
+                        <td data-label="Admin Status">${user.isAdmin ? 'Admin' : 'User'}</td>
+                    </tr>
+                `).join('');
+
+            } catch (error) {
+                console.error('Error fetching users:', error);
+                alert('Error loading users. Please try again.');
+            }
+        }
+
+        // Load users when page loads
+        document.addEventListener('DOMContentLoaded', fetchUsers);
+    </script>
+</body>
+</html> 
