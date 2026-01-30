@@ -16,6 +16,9 @@ app.use(cors());
 // Body parser middleware
 app.use(express.json());    
 
+// Serve static files from Frontend directory
+app.use(express.static(path.join(__dirname, '../Frontend')));
+
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI , {
     useNewUrlParser: true,
